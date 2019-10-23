@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 // parcel will install this automatically if not found in your dependencies :)
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
+// console.log(ANIMALS);
 
 const SearchParams = () => {
   const [location, updateLocation] = useState("Seattle, WA");
-  const [breeds, updateBreeds] = useState([]);
+  const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  const [breed, BreedDropdown, updateBreed] = useDropdown("Breed", "", breeds);
+  const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   
   useEffect(() => {
-    updateBreeds([]);
-    updateBreed("");
-    pet.breeds(animal).then(({ breeds }) => {
-      const breedStrings = breeds.map(({ name }) => name);
-      updateBreeds(breedStrings);
+    setBreeds([]);
+    setBreed("");
+    
+    pet.breeds(animal).then(({ breeds: apiBreeds }) => {
+      const breedStrings = apiBreeds.map(({ name }) => name);
+      setBreeds(breedStrings);
     }, console.error);
-  }, [animal]);
+  }, [animal, setBreed, setBreeds]);
   
   return (
     <div className="search-params">
