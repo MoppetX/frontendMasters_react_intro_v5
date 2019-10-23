@@ -19,6 +19,8 @@ const SearchParams = () => {
       setBreeds(breedStrings);
     }, console.error);
   }, [animal, setBreed, setBreeds]);
+  // the above are the dependencies for useEffect - the variables that will cause useEffect to update should a
+  // change occur to them
   
   return (
     <div className="search-params">
